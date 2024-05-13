@@ -4,15 +4,10 @@
 // Create a function to check if two objects are equal
 
 function equalObject(obj1, obj2){
-    var keys1 = Object.keys(obj1);
-    var keys2 = Object.keys(obj2);
-
-    console.log(keys1, keys2);
-
-    if (keys1.length !== keys2.length) {
-        return false; 
-    }
-    for (var i of keys1){
+    for (var i of Object.keys(obj1)){
+        //console.log("i--->",i);
+        //console.log("object keys", Object.keys(obj1));
+        //console.log("obj1[i]",obj1[i],"obj2[i]",obj2[i]);
         if(obj1[i] !== obj2[i]){
             return false;
         }
@@ -21,11 +16,26 @@ function equalObject(obj1, obj2){
     return true;
 }
 
+var obj1 = { a : 1, b: 2, d:3};
+var obj2 = { a : 1, b: 2, c:3};
+
+console.log(equalObject(obj1,obj2));
+
+// second way
+
+function equalObject2(obj1, obj2){
+    for(var key in obj1){
+        if(obj1[key] !== obj2[key]){
+            return false;
+        }
+    }
+    return true;
+}
 
 var obj1 = { a : 1};
 var obj2 = { a : 1};
 
-console.log(equalObject(obj1,obj2));
+console.log(equalObject2(obj1,obj2));
 
 // query 2 
 // ● Create a function to get the intersection of two objects
@@ -63,16 +73,16 @@ function removeDuplicate(data1, data2) {
     var nonDuplicateData = [];
 
     for (var key in tempData) {
-        var student = tempData[key];
-        var found = false;
+        var isfound = false;
         for (var i = 0; i <= nonDuplicateData.length -1 ; i++) {
-            if (nonDuplicateData[i].email === student.email) {
-                found = true;
+            if (nonDuplicateData[i].name === tempData[key].name &&
+                nonDuplicateData[i].email === tempData[key].email ) {
+                isfound = true;
                 break;
             }
         }
-        if (!found) {
-            nonDuplicateData.push(student);
+        if (!isfound) {
+            nonDuplicateData.push(tempData[key]);
         }
     }
 
@@ -81,13 +91,18 @@ function removeDuplicate(data1, data2) {
 
 var Data1 = [
     { name: "Student 1", email: "student1@mail.com" },
-    { name: "Student 2", email: "student2@mail.com" }
-]
+    { name: "Student 2", email: "student2@mail.com" },
+    { name: "Student 1", email: "student1@mail.com" },
+    { name: "Student 1", email: "student1@mail.com" }
+];
 
 var Data2 = [
     { name: "Student 1", email: "student1@mail.com" },
-    { name: "Student 3", email: "student3@mail.com" }
-]
+    { name: "Student 3", email: "student3@mail.com" },
+    { name: "Student 1", email: "student1@mail.com" },
+    { name: "Student 1", email: "student1@mail.com" }
+    
+];
 
 console.log(removeDuplicate(Data1, Data2));
 
